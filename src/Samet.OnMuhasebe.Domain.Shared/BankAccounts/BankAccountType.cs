@@ -1,6 +1,6 @@
-﻿namespace Samet.OnMuhasebe.BankaHesaplar;
+﻿namespace Samet.OnMuhasebe.BankAccounts;
 
-public enum BankaHesapTuru
+public enum BankAccountType
 {
     VadesizMevduatHesabi=1,
     VadeliMevduatHesabi=2,

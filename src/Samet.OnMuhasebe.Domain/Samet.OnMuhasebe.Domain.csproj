@@ -9,12 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="BankAccounts\**" />
-    <EmbeddedResource Remove="BankAccounts\**" />
-    <None Remove="BankAccounts\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Samet.OnMuhasebe.Domain.Shared\Samet.OnMuhasebe.Domain.Shared.csproj" />
   </ItemGroup>
 
@@ -32,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BankaHesaplar\" />
+    <Folder Include="BankAccounts\" />
   </ItemGroup>
 
 </Project>

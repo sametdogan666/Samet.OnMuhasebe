@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BankaHesaplar\" />
+    <Folder Include="BankAccounts\" />
   </ItemGroup>
 
 </Project>
