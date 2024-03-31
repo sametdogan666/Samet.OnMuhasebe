@@ -28,6 +28,10 @@
   <ItemGroup>
     <Folder Include="BankAccounts\" />
     <Folder Include="Banks\" />
+    <Folder Include="Expenses\" />
+    <Folder Include="Parameters\" />
+    <Folder Include="SpecialCodes\" />
+    <Folder Include="Safes\" />
     <Folder Include="Stores\" />
   </ItemGroup>
 
