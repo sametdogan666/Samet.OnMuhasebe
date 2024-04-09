@@ -18,4 +18,10 @@ public class Invoice : FullAuditedAggregateRoot<Guid>
     public Guid TermId { get; set; }
     public required string Description { get; set; }
     public bool Status { get; set; }
+
+    public required Current Current { get; set; }
+    public SpecialCode? SpecialCode1 { get; set; }
+    public SpecialCode? SpecialCode2 { get; set; }
+    public required Branch Branch { get; set; }
+    public required Term Term { get; set; }
 }

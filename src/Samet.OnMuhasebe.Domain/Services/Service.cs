@@ -12,4 +12,8 @@ public class Service : FullAuditedAggregateRoot<Guid>
     public Guid? SpecialCode2Id { get; set; }
     public required string Description { get; set; }
     public bool Status { get; set; }
+
+    public required Unit Unit { get; set; }
+    public SpecialCode? SpecialCode1 { get; set; }
+    public SpecialCode? SpecialCode2 { get; set; }
 }

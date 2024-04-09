@@ -1,2 +1,15 @@
 ﻿global using System;
 global using Volo.Abp.Domain.Entities.Auditing;
+global using System.Collections.Generic;
+global using Samet.OnMuhasebe.BankAccounts;
+global using Samet.OnMuhasebe.Banks;
+global using Samet.OnMuhasebe.SpecialCodes;
+global using Samet.OnMuhasebe.BankBranches;
+global using Samet.OnMuhasebe.Branches;
+global using Samet.OnMuhasebe.Currents;
+global using Samet.OnMuhasebe.Units;
+global using Samet.OnMuhasebe.Stores;
+global using Samet.OnMuhasebe.Bills;
+global using Samet.OnMuhasebe.Terms;
+global using Samet.OnMuhasebe.Services;
+global using Samet.OnMuhasebe.Safes;

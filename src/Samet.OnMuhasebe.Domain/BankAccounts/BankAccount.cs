@@ -14,4 +14,8 @@ public class BankAccount : FullAuditedAggregateRoot<Guid>
     public required string Description { get; set; }
     public bool Status { get; set; }
 
+    public required BankBranch BankBranch { get; set; }
+    public SpecialCode? SpecialCode1 { get; set; }
+    public SpecialCode? SpecialCode2 { get; set; }
+    public Branch? Branch { get; set; }
 }

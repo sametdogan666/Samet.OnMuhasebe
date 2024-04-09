@@ -9,4 +9,9 @@ public class Bank : FullAuditedAggregateRoot<Guid>
     public required string Description { get; set; }
     public bool Status { get; set; }
 
+    public SpecialCode? SpecialCode1 { get; set; }
+    public SpecialCode? SpecialCode2 { get; set; }
+
+    public ICollection<BankBranch>? BankBranches { get; set; }
+
 }
