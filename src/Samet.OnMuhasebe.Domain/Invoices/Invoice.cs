@@ -24,4 +24,7 @@ public class Invoice : FullAuditedAggregateRoot<Guid>
     public SpecialCode? SpecialCode2 { get; set; }
     public required Branch Branch { get; set; }
     public required Term Term { get; set; }
+
+    public ICollection<InvoiceTransaction>? InvoiceTransactions { get; set; }
+
 }

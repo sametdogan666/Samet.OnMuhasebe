@@ -1,4 +1,6 @@
-﻿namespace Samet.OnMuhasebe.Units;
+﻿
+
+namespace Samet.OnMuhasebe.Units;
 
 public class Unit:FullAuditedAggregateRoot<Guid>
 {
@@ -13,4 +15,6 @@ public class Unit:FullAuditedAggregateRoot<Guid>
     public SpecialCode? SpecialCode2 { get; set; }
 
     public ICollection<Service>? Services { get; set; }
+    public ICollection<Stock>? Stocks { get; set; }
+    public ICollection<Expense>? Expenses { get; set; }
 }

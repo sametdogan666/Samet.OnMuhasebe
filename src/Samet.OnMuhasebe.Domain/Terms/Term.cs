@@ -8,4 +8,6 @@ public class Term : FullAuditedAggregateRoot<Guid>
     public bool Status { get; set; }
 
     public ICollection<Invoice>? Invoices { get; set; }
+    public ICollection<Receipt>? Receipts { get; set; }
+    public ICollection<CompanyParameter>? CompanyParameters { get; set; }
 }

@@ -17,5 +17,6 @@ public class Current : FullAuditedAggregateRoot<Guid>
     public SpecialCode? SpecialCode2 { get; set; }
 
     public ICollection<Invoice>? Invoices { get; set; }
+    public ICollection<Receipt>? Receipts { get; set; }
 
 }

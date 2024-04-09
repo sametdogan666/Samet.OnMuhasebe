@@ -1,6 +1,4 @@
-﻿using Volo.Abp.Domain.Entities;
-
-namespace Samet.OnMuhasebe.Parameters;
+﻿namespace Samet.OnMuhasebe.Parameters;
 
 public class CompanyParameter : Entity<Guid>
 {
@@ -9,4 +7,8 @@ public class CompanyParameter : Entity<Guid>
     public Guid TermId { get; set; }
     public Guid? StoreId { get; set; }
 
+    public required IdentityUser User { get; set; }
+    public required Branch Branch { get; set; }
+    public required Term Term { get; set; }
+    public Store? Store { get; set; }
 }

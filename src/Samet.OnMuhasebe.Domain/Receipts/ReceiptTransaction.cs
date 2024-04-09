@@ -6,7 +6,7 @@ public class ReceiptTransaction : FullAuditedEntity<Guid>
     public PaymentType PaymentType { get; set; }
     public required string TrackingNo { get; set; }
     public Guid? CheckBankId { get; set; }
-    public Guid? CheckBanBranchId { get; set; }
+    public Guid? CheckBankBranchId { get; set; }
     public string? CheckAccountNo { get; set; }
     public string? DocumentNo { get; set; }
     public DateTime Maturity { get; set; }
@@ -17,5 +17,13 @@ public class ReceiptTransaction : FullAuditedEntity<Guid>
     public DocumentStatus DocumentStatus { get; set; }
     public bool OurOwnDocument { get; set; }
     public string? Description { get; set; }
+
+    public required Receipt Receipt { get; set; }
+    public Bank? CheckBank { get; set; }
+    public BankBranch? CheckBankBranch { get; set; }
+    public Safe? Safe { get; set; }
+    public BankAccount? BankAccount { get; set; }
+
+
 
 }

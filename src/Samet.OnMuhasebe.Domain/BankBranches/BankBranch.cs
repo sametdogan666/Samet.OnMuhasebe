@@ -15,4 +15,5 @@ public class BankBranch:FullAuditedAggregateRoot<Guid>
     public SpecialCode? SpecialCode2 { get; set; }
 
     public ICollection<BankAccount>? BankAccounts { get; set; }
+    public ICollection<ReceiptTransaction>? ReceiptTransactions { get; set; }
 }

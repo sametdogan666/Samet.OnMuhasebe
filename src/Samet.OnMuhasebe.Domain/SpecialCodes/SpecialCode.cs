@@ -27,6 +27,12 @@ public class SpecialCode : FullAuditedAggregateRoot<Guid>
     public ICollection<Service>? SpecialCode2Services{ get; set; }
     public ICollection<Safe>? SpecialCode1Safes { get; set; }
     public ICollection<Safe>? SpecialCode2Safes{ get; set; }
+    public ICollection<Receipt>? SpecialCode1Receipts { get; set; }
+    public ICollection<Receipt>? SpecialCode2Receipts{ get; set; }
+    public ICollection<Stock>? SpecialCode1Stocks { get; set; }
+    public ICollection<Stock>? SpecialCode2Stocks{ get; set; }
+    public ICollection<Expense>? SpecialCode1Expenses { get; set; }
+    public ICollection<Expense>? SpecialCode2Expenses{ get; set; }
 
 
 

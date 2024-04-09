@@ -11,5 +11,7 @@ public class Branch : FullAuditedAggregateRoot<Guid>
     public ICollection<Store>? Stores { get; set; }
     public ICollection<Invoice>? Invoices { get; set; }
     public ICollection<Safe>? Safes { get; set; }
+    public ICollection<Receipt>? Receipts { get; set; }
+    public ICollection<CompanyParameter>? CompanyParameters { get; set; }
     
 }

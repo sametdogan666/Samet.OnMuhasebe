@@ -16,4 +16,6 @@ public class Service : FullAuditedAggregateRoot<Guid>
     public required Unit Unit { get; set; }
     public SpecialCode? SpecialCode1 { get; set; }
     public SpecialCode? SpecialCode2 { get; set; }
+
+    public ICollection<InvoiceTransaction>? InvoiceTransactions { get; set; }
 }

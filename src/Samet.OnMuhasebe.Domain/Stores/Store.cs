@@ -13,4 +13,7 @@ public class Store : FullAuditedAggregateRoot<Guid>
     public SpecialCode? SpecialCode1 { get; set; }
     public SpecialCode? SpecialCode2 { get; set; }
     public required Branch Branch { get; set; }
+
+    public ICollection<CompanyParameter>? CompanyParameters { get; set; }
+    public ICollection<InvoiceTransaction>? InvoiceTransactions { get; set; }
 }
