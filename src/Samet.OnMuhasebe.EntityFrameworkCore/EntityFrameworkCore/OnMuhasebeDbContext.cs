@@ -1,9 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore;
+using Samet.OnMuhasebe.BankAccounts;
+using Samet.OnMuhasebe.BankBranches;
+using Samet.OnMuhasebe.Banks;
+using Samet.OnMuhasebe.Bills;
+using Samet.OnMuhasebe.Branches;
+using Samet.OnMuhasebe.Configurations;
+using Samet.OnMuhasebe.Consts;
+using Samet.OnMuhasebe.Currents;
+using Samet.OnMuhasebe.Expenses;
+using Samet.OnMuhasebe.Parameters;
+using Samet.OnMuhasebe.Receipts;
+using Samet.OnMuhasebe.Safes;
+using Samet.OnMuhasebe.Services;
+using Samet.OnMuhasebe.SpecialCodes;
+using Samet.OnMuhasebe.Stocks;
+using Samet.OnMuhasebe.Stores;
+using Samet.OnMuhasebe.Terms;
+using Samet.OnMuhasebe.Units;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -53,6 +73,25 @@ public class OnMuhasebeDbContext :
 
     #endregion
 
+    public DbSet<BankAccount> BankAccounts { get; set; }
+    public DbSet<BankBranch> BankBranches { get; set; }
+    public DbSet<Bank> Banks { get; set; }
+    public DbSet<Branch> Branches { get; set; }
+    public DbSet<Current> Currents { get; set; }
+    public DbSet<Expense> Expenses { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
+    public DbSet<CompanyParameter> CompanyParameters { get; set; }
+    public DbSet<Receipt> Receipts { get; set; }
+    public DbSet<Safe> Safes { get; set; }
+    public DbSet<Service> Services { get; set; }
+    public DbSet<SpecialCode> SpecialCodes { get; set; }
+    public DbSet<Stock> Stocks { get; set; }
+    public DbSet<Store> Stores { get; set; }
+    public DbSet<Term> Terms { get; set; }
+    public DbSet<Unit> Units { get; set; }
+
+
+
     public OnMuhasebeDbContext(DbContextOptions<OnMuhasebeDbContext> options)
         : base(options)
     {
@@ -76,11 +115,8 @@ public class OnMuhasebeDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(OnMuhasebeConsts.DbTablePrefix + "YourEntities", OnMuhasebeConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.ConfigureBank();
+        builder.ConfigureBankBranch();
+        builder.ConfigureBankAccount();
     }
 }
