@@ -6,6 +6,9 @@ using Samet.OnMuhasebe.Banks;
 using Samet.OnMuhasebe.Bills;
 using Samet.OnMuhasebe.Consts;
 using Samet.OnMuhasebe.Currents;
+using Samet.OnMuhasebe.Parameters;
+using Samet.OnMuhasebe.Safes;
+using Samet.OnMuhasebe.Services;
 using Samet.OnMuhasebe.Stores;
 using Samet.OnMuhasebe.Terms;
 using Samet.OnMuhasebe.Units;
@@ -569,6 +572,162 @@ public static class OnMuhasebeDbContextModelBuilderExtensions
 
             b.HasOne(x=>x.Store)
                 .WithMany(x=>x.InvoiceTransactions)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureCompanyParameter(this ModelBuilder builder)
+    {
+        builder.Entity<CompanyParameter>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "CompanyParameters", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.UserId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.BranchId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.TermId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.StoreId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            //indexes
+
+            //relations
+            b.HasOne(x => x.User)
+                .WithOne()
+                .HasForeignKey<CompanyParameter>(x => x.UserId);
+
+            b.HasOne(x => x.Branch)
+                .WithMany(x => x.CompanyParameters)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.Term)
+                .WithMany(x => x.CompanyParameters)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.Store)
+                .WithMany(x => x.CompanyParameters)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureService(this ModelBuilder builder)
+    {
+        builder.Entity<Service>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Services", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.Code)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxCodeLength);
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxNameLength);
+
+            b.Property(x => x.VatRate)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Int.ToString());
+
+            b.Property(x=>x.UnitPrice)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.Barcode)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxBarcodeLength);
+
+            b.Property(x => x.UnitId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode1Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode2Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            b.Property(x => x.Status)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+            //indexes
+            b.HasIndex(x => x.Code);
+
+            //relations
+            b.HasOne(x => x.Unit)
+                .WithMany(x => x.Services)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode1)
+                .WithMany(x => x.SpecialCode1Services)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode2).WithMany(x => x.SpecialCode2Services)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureSafe(this ModelBuilder builder)
+    {
+        builder.Entity<Safe>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Safes", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.Code)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxCodeLength);
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxNameLength);
+
+            b.Property(x => x.SpecialCode1Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode2Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.BranchId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            b.Property(x => x.Status)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+            //indexes
+            b.HasIndex(x => x.Code);
+
+            //relations
+            b.HasOne(x => x.SpecialCode1)
+                .WithMany(x => x.SpecialCode1Safes)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode2).WithMany(x => x.SpecialCode2Safes)
                 .OnDelete(DeleteBehavior.NoAction);
         });
     }

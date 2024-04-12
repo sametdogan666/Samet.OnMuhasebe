@@ -124,5 +124,8 @@ public class OnMuhasebeDbContext :
         builder.ConfigureTerm();
         builder.ConfigureInvoice();
         builder.ConfigureInvoiceTransaction();
+        builder.ConfigureCompanyParameter();
+        builder.ConfigureService();
+        builder.ConfigureSafe();
     }
 }
