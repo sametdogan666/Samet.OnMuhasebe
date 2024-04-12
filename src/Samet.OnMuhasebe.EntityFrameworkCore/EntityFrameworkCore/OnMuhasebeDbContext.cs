@@ -118,5 +118,11 @@ public class OnMuhasebeDbContext :
         builder.ConfigureBank();
         builder.ConfigureBankBranch();
         builder.ConfigureBankAccount();
+        builder.ConfigureUnit();
+        builder.ConfigureCurrent();
+        builder.ConfigureStore();
+        builder.ConfigureTerm();
+        builder.ConfigureInvoice();
+        builder.ConfigureInvoiceTransaction();
     }
 }

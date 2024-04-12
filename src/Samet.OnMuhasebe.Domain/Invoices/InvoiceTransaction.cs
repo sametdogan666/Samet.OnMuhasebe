@@ -16,7 +16,7 @@ public class InvoiceTransaction : FullAuditedEntity<Guid>
     public decimal ExcludesVat { get; set; }
     public decimal VatAmount { get; set; }
     public decimal NetAmount { get; set; }
-    public required string Description { get; set; }
+    public string? Description { get; set; }
 
     public required Invoice Invoice { get; set; }
     public Stock? Stock { get; set; }
