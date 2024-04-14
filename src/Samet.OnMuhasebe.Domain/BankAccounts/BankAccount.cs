@@ -20,5 +20,5 @@ public class BankAccount : FullAuditedAggregateRoot<Guid>
     public Branch? Branch { get; set; }
 
     public ICollection<Receipt>? Receipts { get; set; }
-    public ICollection<ReceiptTransaction>? ReceiptTransactions { get; set; }
+    public ICollection<Receipts.ReceiptTransaction>? ReceiptTransactions { get; set; }
 }

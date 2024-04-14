@@ -4,7 +4,7 @@ public class ReceiptTransaction : FullAuditedEntity<Guid>
 {
     public Guid ReceiptId { get; set; }
     public PaymentType PaymentType { get; set; }
-    public required string TrackingNo { get; set; }
+    public string? TrackingNo { get; set; }
     public Guid? CheckBankId { get; set; }
     public Guid? CheckBankBranchId { get; set; }
     public string? CheckAccountNo { get; set; }
@@ -12,6 +12,7 @@ public class ReceiptTransaction : FullAuditedEntity<Guid>
     public DateTime Maturity { get; set; }
     public string? PrincipalDebtor { get; set; }
     public string? Endorser { get; set; }
+    public Guid? SafeId { get; set; }
     public Guid? BankAccountId { get; set; }
     public decimal Sum { get; set; }
     public DocumentStatus DocumentStatus { get; set; }

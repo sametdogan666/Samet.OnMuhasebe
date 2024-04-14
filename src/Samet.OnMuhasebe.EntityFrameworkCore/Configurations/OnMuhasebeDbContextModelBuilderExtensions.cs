@@ -6,7 +6,10 @@ using Samet.OnMuhasebe.Banks;
 using Samet.OnMuhasebe.Bills;
 using Samet.OnMuhasebe.Consts;
 using Samet.OnMuhasebe.Currents;
+using Samet.OnMuhasebe.Expenses;
 using Samet.OnMuhasebe.Parameters;
+using Samet.OnMuhasebe.Receipts;
+using Samet.OnMuhasebe.ReceiptTransaction;
 using Samet.OnMuhasebe.Safes;
 using Samet.OnMuhasebe.Services;
 using Samet.OnMuhasebe.Stores;
@@ -728,6 +731,273 @@ public static class OnMuhasebeDbContextModelBuilderExtensions
                 .OnDelete(DeleteBehavior.NoAction);
 
             b.HasOne(x => x.SpecialCode2).WithMany(x => x.SpecialCode2Safes)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureReceipt(this ModelBuilder builder)
+    {
+        builder.Entity<Receipt>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Receipts", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.ReceiptType)
+                .IsRequired()
+                .HasColumnType(SqlDbType.TinyInt.ToString());
+
+            b.Property(x => x.ReceiptNo)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(ReceiptsConst.MaxReceiptNoLength);
+
+            b.Property(x => x.Date)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Date.ToString());
+
+            b.Property(x => x.CurrentId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SafeId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.BankAccountId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.NumberOfTransactions)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Int.ToString());
+
+            b.Property(x => x.CheckTotal)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.BillTotal)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.PosTotal)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.CashTotal)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.BankTotal)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.SpecialCode1Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode2Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.BranchId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.TermId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            b.Property(x => x.Status)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+            //indexes
+            b.HasIndex(x => x.ReceiptNo);
+
+            //relations
+            b.HasOne(x => x.Current)
+                .WithMany(x => x.Receipts)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.Safe)
+                .WithMany(x => x.Receipts)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.BankAccount)
+                .WithMany(x => x.Receipts)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode1)
+                .WithMany(x => x.SpecialCode1Receipts)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode2)
+                .WithMany(x => x.SpecialCode2Receipts)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.Branch)
+                .WithMany(x => x.Receipts)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.Term)
+                .WithMany(x => x.Receipts)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureReceiptTransaction(this ModelBuilder builder)
+    {
+        builder.Entity<Receipts.ReceiptTransaction>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "ReceiptTransactions", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.ReceiptId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.PaymentType)
+                .IsRequired()
+                .HasColumnType(SqlDbType.TinyInt.ToString());
+
+            b.Property(x => x.TrackingNo)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(ReceiptTransactionsConst.MaxTrackingNoLength);
+
+            b.Property(x => x.CheckBankId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.CheckBankBranchId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.CheckAccountNo)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(ReceiptTransactionsConst.MaxCheckAccountNoLength);
+
+            b.Property(x => x.DocumentNo)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(ReceiptTransactionsConst.MaxDocumentNoLength);
+
+            b.Property(x => x.Maturity)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Date.ToString());
+
+            b.Property(x => x.PrincipalDebtor)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(ReceiptTransactionsConst.MaxPrincipalDebtorLength);
+
+            b.Property(x => x.Endorser)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(ReceiptTransactionsConst.MaxEndorserLength);
+
+            b.Property(x => x.SafeId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.BankAccountId)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.Sum)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.DocumentStatus)
+                .IsRequired()
+                .HasColumnType(SqlDbType.TinyInt.ToString());
+
+            b.Property(x => x.OurOwnDocument)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            //indexes
+            b.HasIndex(x => x.TrackingNo);
+
+            //relations
+            b.HasOne(x => x.Receipt)
+                .WithMany(x => x.ReceiptTransactions)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne(x => x.CheckBank)
+                .WithMany(x => x.ReceiptTransactions)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.CheckBankBranch)
+                .WithMany(x => x.ReceiptTransactions)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.Safe)
+                .WithMany(x => x.ReceiptTransactions)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x=>x.BankAccount)
+                .WithMany(x=>x.ReceiptTransactions)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureExpense(this ModelBuilder builder)
+    {
+        builder.Entity<Expense>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Expenses", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.Code)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxCodeLength);
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxNameLength);
+
+            b.Property(x => x.VatAmount)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Int.ToString());
+
+            b.Property(x => x.UnitPrice)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x => x.Barcode)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxBarcodeLength);
+
+            b.Property(x => x.UnitId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode1Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode2Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            b.Property(x => x.Status)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+
+            //indexes
+            b.HasIndex(x => x.Code);
+
+            //relations
+            b.HasOne(x => x.Unit)
+                .WithMany(x => x.Expenses)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode1)
+                .WithMany(x => x.SpecialCode1Expenses)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode2).WithMany(x => x.SpecialCode2Expenses)
                 .OnDelete(DeleteBehavior.NoAction);
         });
     }
