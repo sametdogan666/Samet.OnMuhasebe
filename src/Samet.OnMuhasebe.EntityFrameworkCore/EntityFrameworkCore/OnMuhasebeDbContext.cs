@@ -132,5 +132,6 @@ public class OnMuhasebeDbContext :
         builder.ConfigureExpense();
         builder.ConfigureSpecialCode();
         builder.ConfigureStock();
+        builder.ConfigureBranch();
     }
 }

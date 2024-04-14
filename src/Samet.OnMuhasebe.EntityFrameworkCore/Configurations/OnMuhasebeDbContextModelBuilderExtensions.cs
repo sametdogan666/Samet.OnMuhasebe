@@ -4,6 +4,7 @@ using Samet.OnMuhasebe.BankAccounts;
 using Samet.OnMuhasebe.BankBranches;
 using Samet.OnMuhasebe.Banks;
 using Samet.OnMuhasebe.Bills;
+using Samet.OnMuhasebe.Branches;
 using Samet.OnMuhasebe.Consts;
 using Samet.OnMuhasebe.Currents;
 using Samet.OnMuhasebe.Expenses;
@@ -23,21 +24,6 @@ namespace Samet.OnMuhasebe.Configurations;
 
 public static class OnMuhasebeDbContextModelBuilderExtensions
 {
-    public static void Configure(this ModelBuilder builder)
-    {
-        builder.Entity<Bank>(b =>
-        {
-            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Banks", OnMuhasebeConsts.DbSchema);
-            b.ConfigureByConvention();
-
-            //properties
-
-            //indexes
-
-            //relations
-        });
-    }
-
 
     public static void ConfigureBank(this ModelBuilder builder)
     {
@@ -1105,6 +1091,38 @@ public static class OnMuhasebeDbContextModelBuilderExtensions
             b.HasOne(x=>x.Unit)
                 .WithMany(x=>x.Stocks)
                 .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureBranch(this ModelBuilder builder)
+    {
+        builder.Entity<Branch>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Branchs", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.Code)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxCodeLength);
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxNameLength);
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            b.Property(x => x.Status)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+            //indexes
+            b.HasIndex(x => x.Code);
+
+            //relations
         });
     }
 }
