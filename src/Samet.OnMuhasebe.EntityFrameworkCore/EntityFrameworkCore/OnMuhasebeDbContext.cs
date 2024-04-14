@@ -130,5 +130,7 @@ public class OnMuhasebeDbContext :
         builder.ConfigureReceipt();
         builder.ConfigureReceiptTransaction();
         builder.ConfigureExpense();
+        builder.ConfigureSpecialCode();
+        builder.ConfigureStock();
     }
 }

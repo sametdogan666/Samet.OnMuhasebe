@@ -12,6 +12,8 @@ using Samet.OnMuhasebe.Receipts;
 using Samet.OnMuhasebe.ReceiptTransaction;
 using Samet.OnMuhasebe.Safes;
 using Samet.OnMuhasebe.Services;
+using Samet.OnMuhasebe.SpecialCodes;
+using Samet.OnMuhasebe.Stocks;
 using Samet.OnMuhasebe.Stores;
 using Samet.OnMuhasebe.Terms;
 using Samet.OnMuhasebe.Units;
@@ -998,6 +1000,110 @@ public static class OnMuhasebeDbContextModelBuilderExtensions
                 .OnDelete(DeleteBehavior.NoAction);
 
             b.HasOne(x => x.SpecialCode2).WithMany(x => x.SpecialCode2Expenses)
+                .OnDelete(DeleteBehavior.NoAction);
+        });
+    }
+
+    public static void ConfigureSpecialCode(this ModelBuilder builder)
+    {
+        builder.Entity<SpecialCode>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "SpecialCodes", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.Code)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxCodeLength);
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxNameLength);
+
+            b.Property(x => x.SpecialCodeType)
+                .IsRequired()
+                .HasColumnType(SqlDbType.TinyInt.ToString());
+
+            b.Property(x => x.CardType)
+                .IsRequired()
+                .HasColumnType(SqlDbType.TinyInt.ToString());
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            b.Property(x => x.Status)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+            //indexes
+            b.HasIndex(x => x.Code);
+
+            //relations
+        });
+    }
+
+    public static void ConfigureStock(this ModelBuilder builder)
+    {
+        builder.Entity<Stock>(b =>
+        {
+            b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Stocks", OnMuhasebeConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            //properties
+            b.Property(x => x.Code)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxCodeLength);
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxNameLength);
+
+            b.Property(x => x.VatRate)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Int.ToString());
+
+            b.Property(x => x.UnitPrice)
+                .IsRequired()
+                .HasColumnType(SqlDbType.Money.ToString());
+
+            b.Property(x=>x.Barcode)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxBarcodeLength);
+
+            b.Property(x => x.UnitId)
+                .IsRequired()
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode1Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.SpecialCode2Id)
+                .HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            b.Property(x => x.Description)
+                .HasColumnType(SqlDbType.VarChar.ToString())
+                .HasMaxLength(EntitiesConst.MaxDescriptionLength);
+
+            b.Property(x => x.Status)
+                .HasColumnType(SqlDbType.Bit.ToString());
+
+            //indexes
+            b.HasIndex(x => x.Code);
+
+            //relations
+            b.HasOne(x => x.SpecialCode1)
+                .WithMany(x => x.SpecialCode1Stocks)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x => x.SpecialCode2).WithMany(x => x.SpecialCode2Stocks)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasOne(x=>x.Unit)
+                .WithMany(x=>x.Stocks)
                 .OnDelete(DeleteBehavior.NoAction);
         });
     }
