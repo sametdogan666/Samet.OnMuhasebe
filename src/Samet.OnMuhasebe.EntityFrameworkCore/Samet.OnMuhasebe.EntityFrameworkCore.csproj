@@ -30,6 +30,19 @@
 
   <ItemGroup>
     <Folder Include="Configurations\" />
+    <Folder Include="BankAccounts\" />
+    <Folder Include="Banks\" />
+    <Folder Include="Branches\" />
+    <Folder Include="Expenses\" />
+    <Folder Include="Invoices\" />
+    <Folder Include="Units\" />
+    <Folder Include="Terms\" />
+    <Folder Include="Stocks\" />
+    <Folder Include="SpecialCodes\" />
+    <Folder Include="Services\" />
+    <Folder Include="Safes\" />
+    <Folder Include="Receipts\" />
+    <Folder Include="Parameters\" />
   </ItemGroup>
 
 </Project>
